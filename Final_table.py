@@ -82,5 +82,4 @@ table2.rename_column('Quality_1', 'Quality')
 #Create a new table with all of the correct columns
 at.write(table2['DR2Name', 'Prot_Final', 'Class', 'Quality', 'Double', 'Multi', 'Eclipsing_Binary', 'Contaminated', 'Spot_Evolution', 'Flares', 'Notes', 'RA', 'Dec', 'Gmag', 'BP_RP', 'Prot', 'Prot_LS', 'Power_LS', 'TESS_Data'], "Cumulative_Praesepe_tails_table.csv", delimiter=",")
 
-print(np.where(table2['Quality'] == 1))
 
