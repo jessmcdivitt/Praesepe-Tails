@@ -76,7 +76,8 @@ ax1.vlines(x=tout["BP_RP"], ymin=tout["Prot_Final"],
 #######################################
 # Plot central cluster
 ax2 = axes[1]
-cluster_cmd=ax2.plot(tab["BP_RP"], tab["AbsGMag"], ".", c="darkgray",
+core = tab["Prot_1"]>0
+cluster_cmd=ax2.plot(tab["BP_RP"][core], tab["AbsGMag"][core], ".", c="darkgray",
                      markersize=2, zorder=1, label="Central Cluster")
 
 
@@ -141,4 +142,4 @@ dbf["Class"][garbage] = "Systematics"
 
 # dbf.write("rnaas_dbf.csv",delimiter=",",overwrite=True)
 
-plt.show()
+# plt.show()
