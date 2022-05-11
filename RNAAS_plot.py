@@ -37,6 +37,8 @@ ax1 = axes[0]
 cluster=ax1.plot(tab["BP_RP"], tab["Prot_1"], ".",
                  markerfacecolor="darkgray", markeredgecolor='darkgray',
                  markersize=2, zorder=1, label='Central Cluster')
+# ax1.scatter([],[],s=49, c="w", zorder=2, marker='*', edgecolors='black',
+#                  linewidths=0.5, label=r'Candidates with TESS data')
 tails=ax1.plot(tab["BP_RP"], tab["Prot_Final"], "*",
                markerfacecolor="k", markeredgecolor="black",
                markersize=7, markeredgewidth=0.5, zorder=3,
@@ -78,6 +80,15 @@ cluster_cmd=ax2.plot(tab["BP_RP"], tab["AbsGMag"], ".", c="darkgray",
                      markersize=2, zorder=1, label="Central Cluster")
 
 
+
+# Plot stars without detections as open stars
+bad = (tab["Quality"]<=0) & (tab["Quality"].mask==False)
+x = tab["BP_RP"][bad]
+y = tab["AbsGMag"][bad]
+ax2.plot(x,y,"*",mfc="w",mec="k",mew=0.5, markersize=7,alpha=0.75,
+         label=r'Candidates with TESS data')
+
+
 # Only plot stars from the tidal tails with good periods
 good = tab["Quality"]==1
 x = tab["BP_RP"][good]
@@ -85,9 +96,15 @@ y = tab["AbsGMag"][good]
 colors=tab["Prot_Final"][good]
 
 
-sc = ax2.scatter(x,y,s=49, c=colors, zorder=2, marker='*', edgecolors='black',
-                 linewidths=0.5, label="Tails")
+sc = ax2.scatter(x,y,s=49, c=colors, zorder=10, marker='*', edgecolors='black',
+                 linewidths=0.5, label=r'Candidates with $P_{\rm rot}$')
 plt.colorbar(sc,label='Rotation Period')
+
+# outliers=ax2.plot([],[], "*",
+#                   markerfacecolor="#35b779",
+#                   markeredgecolor="black",
+#                   markersize=7, markeredgewidth=0.5, zorder=4,
+#                   label=r'Doubled $P_{\rm rot}$')
 
 #Adjust plot
 ax2.set_xlabel(r"$(G_{\rm BP} - G_{\rm RP})$",fontsize=11)
@@ -96,7 +113,7 @@ ax2.set_ylim(16,-1)
 # ax2.set_title("Praesepe")
 ax2.xaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
 ax2.yaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
-# ax2.legend(loc="upper right")
+ax2.legend(loc="upper right", fontsize=8)
 
 ax1.tick_params(labelsize=8)
 ax2.tick_params(labelsize=8)
@@ -122,6 +139,6 @@ garbage = dbf["Class"]=="Garbage"
 dbf["Class"][garbage] = "Systematics"
 
 
-dbf.write("rnaas_dbf.csv",delimiter=",",overwrite=True)
+# dbf.write("rnaas_dbf.csv",delimiter=",",overwrite=True)
 
-# plt.show()
+plt.show()
