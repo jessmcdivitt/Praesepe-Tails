@@ -34,7 +34,7 @@ fig, axes = plt.subplots(1,2,sharex=True,figsize=(8,3.75),
 #######################################
 ax1 = axes[0]
 #Create Scatterplots
-core = (tab["Prot_1"]>0) & (tab["Pmem"]>=50) & (tab["Pmem"]<=100)
+core = (tab["Prot_1"]>0) & (tab["Pmem"]>=70) & (tab["Pmem"]<=100)
 
 cluster=ax1.plot(tab["BP_RP"][core], tab["Prot_1"][core], ".",
                  markerfacecolor="darkgray", markeredgecolor='darkgray',
