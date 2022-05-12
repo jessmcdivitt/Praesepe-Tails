@@ -34,7 +34,9 @@ fig, axes = plt.subplots(1,2,sharex=True,figsize=(8,3.75),
 #######################################
 ax1 = axes[0]
 #Create Scatterplots
-cluster=ax1.plot(tab["BP_RP"], tab["Prot_1"], ".",
+core = (tab["Prot_1"]>0) & (tab["Pmem"]>=50) & (tab["Pmem"]<=100)
+
+cluster=ax1.plot(tab["BP_RP"][core], tab["Prot_1"][core], ".",
                  markerfacecolor="darkgray", markeredgecolor='darkgray',
                  markersize=2, zorder=1, label='Central Cluster')
 # ax1.scatter([],[],s=49, c="w", zorder=2, marker='*', edgecolors='black',
@@ -48,7 +50,7 @@ tails=ax1.plot(tab["BP_RP"], tab["Prot_Final"], "*",
 ax1.set_ylim(0.01, 30)
 ax1.set_xlim(0.5, 3.25)
 ax1.set_xlabel(r"$(G_{\rm BP} - G_{\rm RP})$",fontsize=11)
-ax1.set_ylabel("Rotation Period (Days)",fontsize=11)
+ax1.set_ylabel("Rotation Period (days)",fontsize=11)
 ax1.xaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
 ax1.yaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
 
@@ -76,7 +78,6 @@ ax1.vlines(x=tout["BP_RP"], ymin=tout["Prot_Final"],
 #######################################
 # Plot central cluster
 ax2 = axes[1]
-core = tab["Prot_1"]>0
 cluster_cmd=ax2.plot(tab["BP_RP"][core], tab["AbsGMag"][core], ".", c="darkgray",
                      markersize=2, zorder=1, label="Central Cluster")
 
@@ -99,7 +100,7 @@ colors=tab["Prot_Final"][good]
 
 sc = ax2.scatter(x,y,s=49, c=colors, zorder=10, marker='*', edgecolors='black',
                  linewidths=0.5, label=r'Candidates with $P_{\rm rot}$')
-plt.colorbar(sc,label='Rotation Period')
+plt.colorbar(sc,label='Rotation Period (days)')
 
 # outliers=ax2.plot([],[], "*",
 #                   markerfacecolor="#35b779",
@@ -110,7 +111,7 @@ plt.colorbar(sc,label='Rotation Period')
 #Adjust plot
 ax2.set_xlabel(r"$(G_{\rm BP} - G_{\rm RP})$",fontsize=11)
 ax2.set_ylabel(r"$M_G$",fontsize=11)
-ax2.set_ylim(16,-1)
+ax2.set_ylim(13,1)
 # ax2.set_title("Praesepe")
 ax2.xaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
 ax2.yaxis.grid(color='lightgray', linestyle='solid', alpha=0.25)
